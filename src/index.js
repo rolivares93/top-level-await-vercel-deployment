@@ -1,13 +1,19 @@
 import { expressMiddleware } from '@apollo/server/express4'
 import cors from 'cors'
+import dotenv from 'dotenv'
 import express from 'express'
 import { server } from './apollo/server.js'
 
+dotenv.config()
+
 const app = express()
+const port = process.env.APP_PORT || 4002
 
 await server.start()
 
 app.use(cors())
+
+app.use('/', (req, res) => res.send({ port }))
 
 app.use(
   '/graphql',
@@ -17,4 +23,4 @@ app.use(
   })
 )
 
-app.listen(4001)
+app.listen(port)
