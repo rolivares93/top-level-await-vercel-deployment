@@ -1,17 +1,17 @@
+import { expressMiddleware } from '@apollo/server/express4'
+import cors from 'cors'
 import express from 'express'
-
-async function init() {
-  await new Promise(resolve => setTimeout(resolve, 1000))
-}
-
-await init()
+import { server } from './apollo/server.js'
 
 const app = express()
 
-app.get('/', (req, res) => {
-  res.send('Hello, World')
-})
+await server.start()
 
-app.listen(3000, () => {
-  console.log('Server is running at http://localhost:3000')
-})
+app.use(
+  '/graphql',
+  cors(),
+  express.json(),
+  expressMiddleware(server),
+)
+
+await new Promise(resolve => app.listen({ port: 4001 }, resolve))
