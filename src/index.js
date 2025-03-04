@@ -7,8 +7,16 @@ const app = express()
 
 await server.start()
 
+app.use(cors())
+
 app.get('/', (req, res) => res.send({ success: true }))
 
-app.use('/graphql', cors(), express.json(), expressMiddleware(server))
+app.use(
+  '/graphql',
+  express.json(),
+  expressMiddleware(server, {
+    context: async ({ req, res }) => ({ req, res }),
+  })
+)
 
 app.listen(4001)
