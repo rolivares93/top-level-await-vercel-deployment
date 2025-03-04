@@ -7,13 +7,13 @@ import { server } from './apollo/server.js'
 dotenv.config()
 
 const app = express()
-const port = process.env.APP_PORT || 4002
+const port = process.env.APP_PORT || 4000
 
 await server.start()
 
 app.use(cors())
 
-app.use('/', (req, res) => res.send({ port }))
+app.get('/', (req, res) => res.send({ port }))
 
 app.use(
   '/graphql',
