@@ -9,6 +9,6 @@ await server.start()
 
 app.get('/', (req, res) => res.send({ success: true }))
 
-// app.use('/graphql', cors(), express.json(), expressMiddleware(server))
+app.use('/graphql', cors(), express.json(), expressMiddleware(server))
 
-await new Promise(resolve => app.listen({ port: 4001 }, resolve))
+app.listen(4001)
