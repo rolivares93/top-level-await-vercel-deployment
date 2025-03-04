@@ -9,8 +9,6 @@ await server.start()
 
 app.use(cors())
 
-app.get('/', (req, res) => res.send({ success: true }))
-
 app.use(
   '/graphql',
   express.json(),
